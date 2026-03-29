@@ -26,3 +26,8 @@ hentpant/GoogleService-Info.plist
 .vscode/
 .claude/
 .DS_Store
+
+# Loose local design/source assets
+APPPICS/
+image.png
+iosappicon.png
