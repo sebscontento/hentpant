@@ -1,3 +1,15 @@
+# Local env (never commit real passwords or service role keys)
+.env
+.env.*
+!.env.example
+
+# Supabase CLI local state
+supabase/.branches
+supabase/.temp
+
+# Project-specific operational notes
+SUPABASE.md
+
 # Local/project-specific app config
 ExportOptions.plist
 hentpant/GoogleService-Info.plist
@@ -8,9 +20,9 @@ hentpant/GoogleService-Info.plist
 *.mobileprovision
 *.cer
 
-# Supabase CLI local state
-supabase/.branches
-supabase/.temp
-
-# macOS metadata
+# Xcode / editor local state
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+.vscode/
+.claude/
 .DS_Store
