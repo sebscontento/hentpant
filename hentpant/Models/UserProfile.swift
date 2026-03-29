@@ -5,6 +5,16 @@
 
 import Foundation
 
+enum ModeratorRequestStatus: String, Codable {
+    case none
+    case pending
+    case rejected
+
+    var isPending: Bool {
+        self == .pending
+    }
+}
+
 struct UserProfile: Identifiable, Codable, Equatable {
     let id: String
     var displayName: String
@@ -14,6 +24,7 @@ struct UserProfile: Identifiable, Codable, Equatable {
     /// User can collect pant from others.
     var canReceive: Bool
     var staffRole: StaffRole
+    var moderatorRequestStatus: ModeratorRequestStatus
     var averageRating: Double
     var ratingCount: Int
 
@@ -35,5 +46,9 @@ struct UserProfile: Identifiable, Codable, Equatable {
 
     var canPromoteRoles: Bool {
         staffRole == .admin
+    }
+
+    var canApplyForModerator: Bool {
+        staffRole == .user && !moderatorRequestStatus.isPending
     }
 }

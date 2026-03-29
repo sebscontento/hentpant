@@ -17,10 +17,13 @@ struct RootView: View {
             }
         }
         .animation(.easeInOut, value: appState.session?.id)
+        .task {
+            await appState.refresh()
+        }
     }
 }
 
 #Preview {
     RootView()
-        .environmentObject(AppState())
+        .environmentObject(AppState(skipAuthListener: true))
 }

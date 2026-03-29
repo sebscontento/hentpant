@@ -1,0 +1,16 @@
+# Local/project-specific app config
+ExportOptions.plist
+hentpant/GoogleService-Info.plist
+
+# Apple signing / push credentials
+*.p8
+*.p12
+*.mobileprovision
+*.cer
+
+# Supabase CLI local state
+supabase/.branches
+supabase/.temp
+
+# macOS metadata
+.DS_Store

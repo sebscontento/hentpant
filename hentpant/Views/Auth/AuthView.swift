@@ -52,10 +52,10 @@ struct AuthView: View {
                     Section {
                         TextField(String(localized: "Display name"), text: $displayName)
                             .textContentType(.name)
-                        Toggle(String(localized: "I offer pant (giver)"), isOn: $canGive)
-                        Toggle(String(localized: "I collect pant (receiver)"), isOn: $canReceive)
+                        Toggle(String(localized: "I give away items"), isOn: $canGive)
+                        Toggle(String(localized: "I claim items"), isOn: $canReceive)
                     } footer: {
-                        Text(String(localized: "You can enable both. Moderator and admin accounts are assigned separately."))
+                        Text(String(localized: "You can enable both. You can apply for moderator after creating your account."))
                     }
                 }
 
@@ -72,6 +72,7 @@ struct AuthView: View {
                         submitEmail()
                     }
                     .buttonStyle(.borderedProminent)
+                    .disabled(appState.authInFlight)
                 }
 
                 Section {
@@ -86,31 +87,45 @@ struct AuthView: View {
                 }
 
                 Section {
-                    Text(String(localized: "Demo: moderator mod@demo.pant / demo12 — admin admin@demo.pant / demo12"))
+                    Text(String(localized: "Accounts are stored in Supabase. Participation roles can be changed later from the profile screen."))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
             }
             .navigationTitle(String(localized: "PantCollect"))
+            .disabled(appState.authInFlight)
+            .overlay {
+                if appState.authInFlight {
+                    ZStack {
+                        Color.black.opacity(0.08)
+                            .ignoresSafeArea()
+                        ProgressView(mode == .login ? String(localized: "Logging in...") : String(localized: "Creating account..."))
+                            .padding()
+                            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    }
+                }
+            }
         }
     }
 
     private func submitEmail() {
-        if mode == .login {
-            appState.signIn(email: email, password: password)
-        } else {
-            appState.signUp(
-                email: email,
-                password: password,
-                displayName: displayName,
-                canGive: canGive,
-                canReceive: canReceive
-            )
+        Task {
+            if mode == .login {
+                await appState.signIn(email: email, password: password)
+            } else {
+                await appState.signUp(
+                    email: email,
+                    password: password,
+                    displayName: displayName,
+                    canGive: canGive,
+                    canReceive: canReceive
+                )
+            }
         }
     }
 }
 
 #Preview {
     AuthView()
-        .environmentObject(AppState())
+        .environmentObject(AppState(skipAuthListener: true))
 }

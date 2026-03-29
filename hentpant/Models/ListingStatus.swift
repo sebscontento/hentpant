@@ -7,16 +7,14 @@ import Foundation
 
 enum ListingStatus: String, Codable {
     case available
-    case reserved
-    case awaitingGiverConfirmation
+    case pendingPickup = "pending_pickup"
     case completed
     case removed
 
     var displayName: String {
         switch self {
         case .available: return String(localized: "Available")
-        case .reserved: return String(localized: "Reserved")
-        case .awaitingGiverConfirmation: return String(localized: "Awaiting confirmation")
+        case .pendingPickup: return String(localized: "Pending pickup")
         case .completed: return String(localized: "Completed")
         case .removed: return String(localized: "Removed")
         }
