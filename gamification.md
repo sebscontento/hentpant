@@ -24,7 +24,7 @@ Points are the core currency of the gamification system. Every user accumulates 
 
 ## Levels
 
-As users accumulate points, they advance through levels. Each level requires `level × 500` points.
+As users accumulate points, they advance through levels. Each new level starts every 500 total points.
 
 | Level Range | Title |
 |---|---|
@@ -36,10 +36,10 @@ As users accumulate points, they advance through levels. Each level requires `le
 
 The level formula is:
 ```
-level = max(1, totalPoints / 500)
+level = max(1, floor(totalPoints / 500) + 1)
 ```
 
-So for example, 1 500 points = Level 3 (Collector). Progress toward the next level is tracked as a percentage shown in the UI.
+So for example, 500 points = Level 2 and 1 000 points = Level 3. Progress toward the next level resets each time a new 500-point band begins.
 
 ---
 

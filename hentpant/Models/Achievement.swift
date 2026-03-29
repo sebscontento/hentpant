@@ -100,6 +100,8 @@ struct UserAchievementProgress: Identifiable {
     let isUnlocked: Bool
 
     var progress: Float {
-        required > 0 ? Float(current) / Float(required) : 0
+        guard required > 0 else { return 0 }
+        let rawProgress = Float(current) / Float(required)
+        return min(max(rawProgress, 0), 1)
     }
 }

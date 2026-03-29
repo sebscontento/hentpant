@@ -197,7 +197,7 @@ struct UserStatsRow: Codable {
             totalDistanceMeters: total_distance_meters,
             totalEarningsDkk: total_earnings_dkk,
             points: points,
-            level: level,
+            level: UserStats.level(forPoints: points),
             streakDays: streak_days,
             lastActiveDate: last_active_date
         )
